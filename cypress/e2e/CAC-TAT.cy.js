@@ -24,10 +24,10 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   const shortMessage = 'Alguma coisa aqui para fins de teste'
   const longMessage = Cypress._.repeat('Testando 123 qwerty abcdefghijklmnopqrstuvwxyz', 10)
   const products = ['Blog', 'Cursos', 'Mentoria', 'YouTube']
-  
+
   beforeEach(() => cy.visit('./src/index.html'))
 
-  it('verifica o título da aplicação', () => { 
+  it('verifica o título da aplicação', () => {
     cy.title()
       .should('be.equal', title)
   })
@@ -45,7 +45,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('#email').as('campo_email')
     cy.get('@campo_email').should('be.visible')
-    cy.get('@campo_email').type(Cypress.env('email'), {log: false})
+    cy.get('@campo_email').type(Cypress.env('email'), { log: false })
     cy.get('@campo_email').should('have.value', Cypress.env('email'))
 
     // cy.get('#product').as('seleção_produtos')
@@ -59,7 +59,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('#open-text-area').as('como-podemos-te-ajudar')
     cy.get('@como-podemos-te-ajudar').should('be.visible')
-    cy.get('@como-podemos-te-ajudar').type(longMessage, {delay: 0})
+    cy.get('@como-podemos-te-ajudar').type(longMessage, { delay: 0 })
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
@@ -91,7 +91,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('#open-text-area').as('como-podemos-te-ajudar')
     cy.get('@como-podemos-te-ajudar').should('be.visible')
-    cy.get('@como-podemos-te-ajudar').type(shortMessage, {delay: 2})
+    cy.get('@como-podemos-te-ajudar').type(shortMessage, { delay: 2 })
     cy.get('@como-podemos-te-ajudar').should('have.value', shortMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
@@ -134,7 +134,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('#open-text-area').as('como-podemos-te-ajudar')
     cy.get('@como-podemos-te-ajudar').should('be.visible')
-    cy.get('@como-podemos-te-ajudar').type(longMessage, {delay: 0})
+    cy.get('@como-podemos-te-ajudar').type(longMessage, { delay: 0 })
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
@@ -169,16 +169,16 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@campo_telefone').should('have.value', phone)
 
     cy.get('@campo_nome').clear()
-    cy.get('@campo_nome').should('have.value','')
+    cy.get('@campo_nome').should('have.value', '')
 
     cy.get('@campo_sobrenome').clear()
-    cy.get('@campo_sobrenome').should('have.value','')
+    cy.get('@campo_sobrenome').should('have.value', '')
 
     cy.get('@campo_email').clear()
-    cy.get('@campo_email').should('have.value','')
-    
+    cy.get('@campo_email').should('have.value', '')
+
     cy.get('@campo_telefone').clear()
-    cy.get('@campo_telefone').should('have.value','')
+    cy.get('@campo_telefone').should('have.value', '')
   });
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
@@ -190,7 +190,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@msg-de-erro').should('be.visible')
     cy.get('@msg-de-erro').should('have.text', 'Valide os campos obrigatórios!')
   });
-  
+
   it('envia o formulário com sucesso usando um comando customizado', () => {
     // cy.fillMandatoryFieldsAndSubmit(data)
     cy.fillMandatoryFieldsAndSubmit()
@@ -216,6 +216,40 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('#product')
       .select(1)
       .should('have.value', 'blog')
+  });
+
+  it('marca o tipo de atendimento "Feedback', () => {
+    cy.get('input[type="radio"][value="feedback"]')
+      .check()
+      .should('be.checked')
+      .should('have.value', 'feedback')
+  });
+
+  it('marca cada tipo de atendimento [1]', () => {
+    cy.get('input[type="radio"][value="feedback"]')
+      .check()
+      .should('be.checked')
+      .should('have.value', 'feedback')
+
+    cy.get('input[type="radio"]')
+      .check('elogio')
+      .should('be.checked')
+      .should('have.value', 'elogio')
+
+    cy.get('input[type="radio"]')
+      .first().check()
+      .should('be.checked')
+      .should('have.value', 'ajuda')
+  });
+
+  it('marca cada tipo de atendimento [2]', () => {
+    cy.get('input[type="radio"]')
+      .each((typeOfService) => {
+        cy.wrap(typeOfService)
+          .check()
+          .should('be.checked')
+      })
+
   });
 
 })
