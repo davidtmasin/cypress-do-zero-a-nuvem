@@ -63,7 +63,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').type(longMessage, {delay: 0})
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
-    cy.get('button[type="submit"]').as('enviar-form')
+    // cy.get('button[type="submit"]').as('enviar-form')
+    cy.contains('button', 'Enviar').as('enviar-form')
     cy.get('@enviar-form').should('be.visible')
     cy.get('@enviar-form').click()
 
@@ -94,7 +95,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').type(shortMessage, {delay: 2})
     cy.get('@como-podemos-te-ajudar').should('have.value', shortMessage)
 
-    cy.get('button[type="submit"]').as('enviar-form')
+    // cy.get('button[type="submit"]').as('enviar-form')
+    cy.contains('button', 'Enviar').as('enviar-form')
     cy.get('@enviar-form').should('be.visible')
     cy.get('@enviar-form').click()
 
@@ -136,7 +138,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').type(longMessage, {delay: 0})
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
-    cy.get('button[type="submit"]').as('enviar-form')
+    // cy.get('button[type="submit"]').as('enviar-form')
+    cy.contains('button', 'Enviar').as('enviar-form')
     cy.get('@enviar-form').should('be.visible')
     cy.get('@enviar-form').click()
 
@@ -180,7 +183,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
-    cy.get('button[type="submit"]').as('enviar-form')
+    // cy.get('button[type="submit"]').as('enviar-form')
+    cy.contains('button', 'Enviar').as('enviar-form')
     cy.get('@enviar-form').click()
 
     cy.get('.error > strong').as('msg-de-erro')
