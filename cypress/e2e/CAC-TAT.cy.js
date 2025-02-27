@@ -1,6 +1,6 @@
 describe('Central de Atendimento ao Cliente TAT', () => {
   // Variáveis de apoio
-  const utilData = {
+  const data = {
     title: 'Central de Atendimento ao Cliente TAT',
     firstName: 'David',
     lastName: 'Teixeira de Masin',
@@ -14,7 +14,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       'Blog', 'Cursos', 'Mentoria', 'YouTube'
     ]
   }
-
   const title = 'Central de Atendimento ao Cliente TAT'
   const firstName = 'David'
   const lastName = 'Teixeira de Masin'
@@ -36,18 +35,18 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   it('preenche os campos obrigatório e envia o formulário', () => {
     cy.get('#firstName').as('campo_nome')
     cy.get('@campo_nome').should('be.visible')
-    cy.get('@campo_nome').type(firstName)
-    cy.get('@campo_nome').should('have.value', firstName)
+    cy.get('@campo_nome').type(Cypress.env('firstName'))
+    cy.get('@campo_nome').should('have.value', Cypress.env('firstName'))
 
     cy.get('#lastName').as('campo_sobrenome')
     cy.get('@campo_sobrenome').should('be.visible')
-    cy.get('@campo_sobrenome').type(lastName)
-    cy.get('@campo_sobrenome').should('have.value', lastName)
+    cy.get('@campo_sobrenome').type(Cypress.env('lastName'))
+    cy.get('@campo_sobrenome').should('have.value', Cypress.env('lastName'))
 
     cy.get('#email').as('campo_email')
     cy.get('@campo_email').should('be.visible')
-    cy.get('@campo_email').type(validEmail)
-    cy.get('@campo_email').should('have.value', validEmail)
+    cy.get('@campo_email').type(Cypress.env('email'), {log: false})
+    cy.get('@campo_email').should('have.value', Cypress.env('email'))
 
     // cy.get('#product').as('seleção_produtos')
     // cy.get('@seleção_produtos').should('be.visible')
@@ -193,12 +192,30 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
   
   it('envia o formulário com sucesso usando um comando customizado', () => {
-    // cy.fillMandatoryFieldsAndSubmit(utilData)
+    // cy.fillMandatoryFieldsAndSubmit(data)
     cy.fillMandatoryFieldsAndSubmit()
 
     cy.get('.success > strong').as('msg-de-sucesso')
     cy.get('@msg-de-sucesso').should('be.visible')
     cy.get('@msg-de-sucesso').should('have.text', 'Mensagem enviada com sucesso.')
+  });
+
+  it('selecione um produto (YouTube) por seu texto', () => {
+    cy.get('#product')
+      .select('YouTube')
+      .should('have.value', 'youtube')
+  });
+
+  it('selecione um produto (Mentoria) por seu valor', () => {
+    cy.get('#product')
+      .select('mentoria')
+      .should('have.value', 'mentoria')
+  });
+
+  it('selecione um produto (Blog) por seu índice', () => {
+    cy.get('#product')
+      .select(1)
+      .should('have.value', 'blog')
   });
 
 })
