@@ -1,15 +1,15 @@
 let isPhoneRequired = false
 
-// const phoneLabelSpan = document.querySelector('.phone-label-span')
-// const phoneField = document.getElementById('phone')
+const phoneLabelSpan = document.querySelector('.phone-label-span')
+const phoneField = document.getElementById('phone')
 
 document.querySelector('#phone-checkbox')
   .addEventListener('change', function() {
     if (this.checked) {
       phoneLabelSpan.style.display = 'inline'
-    // } else {
-    //   phoneLabelSpan.style.display = 'none'
-    // }
+    } else {
+      phoneLabelSpan.style.display = 'none'
+    }
     phoneField.required = !isPhoneRequired
     isPhoneRequired = !isPhoneRequired
   })
@@ -24,11 +24,11 @@ document.querySelector('button[type="submit"]')
     const productField = document.getElementById('product')
     const helpRadio = document.querySelector('input[value="ajuda"]')
     const emailCheckbox = document.getElementById('email-checkbox')
-    // const phoneCheckbox = document.getElementById('phone-checkbox')
-    // const fileField = document.querySelector('input[type="file"]')
-    // const successMessage = document.querySelector('.success')
-    // if (!firstNameField.value || !lastNameField.value || !emailField.value || !textareaField.value) {
-    //   return showAndHideErrorMessage()
+    const phoneCheckbox = document.getElementById('phone-checkbox')
+    const fileField = document.querySelector('input[type="file"]')
+    const successMessage = document.querySelector('.success')
+    if (!firstNameField.value || !lastNameField.value || !emailField.value || !textareaField.value) {
+      return showAndHideErrorMessage()
     }
     if (isPhoneRequired && !phoneField.value) {
       return showAndHideErrorMessage()
@@ -40,10 +40,10 @@ document.querySelector('button[type="submit"]')
     lastNameField.value = ''
     emailField.value = ''
     textareaField.value = ''
-    // phoneField.value = ''
-    // productField.selectedIndex = 0
-    // helpRadio.checked = true
-    // emailCheckbox.checked = false
+    phoneField.value = ''
+    productField.selectedIndex = 0
+    helpRadio.checked = true
+    emailCheckbox.checked = false
     phoneCheckbox.checked = false
     fileField.value = ''
     phoneLabelSpan.style.display = 'none'
@@ -56,13 +56,13 @@ document.querySelector('button[type="submit"]')
 function showAndHideErrorMessage() {
   const errorMessage = document.querySelector('.error')
   errorMessage.style.display = 'block'
-  // scroll(0,0)
-  // hideMessageAfterTimeout(errorMessage)
-  // return
+  scroll(0,0)
+  hideMessageAfterTimeout(errorMessage)
+  return
 }
 
 function hideMessageAfterTimeout(element) {
   setTimeout(function() {
-    // element.style.display = 'none'
+    element.style.display = 'none'
   }, 3000)
 }
