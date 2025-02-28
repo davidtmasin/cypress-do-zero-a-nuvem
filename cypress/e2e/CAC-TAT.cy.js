@@ -210,14 +210,14 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', 'blog')
   });
 
-  it.only('marca o tipo de atendimento "Feedback', () => {
+  it('marca o tipo de atendimento "Feedback', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
       .should('be.checked')
       .should('have.value', 'feedback')
   });
 
-  it.only('marca cada tipo de atendimento [1]', () => {
+  it('marca cada tipo de atendimento [1]', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
       .should('be.checked')
@@ -234,7 +234,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', 'ajuda')
   });
 
-  it.only('marca cada tipo de atendimento [2]', () => {
+  it('marca cada tipo de atendimento [2]', () => {
     cy.get('input[type="radio"]')
       .each((typeOfService) => {
         cy.wrap(typeOfService)
@@ -243,7 +243,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       })
   });
 
-  it.only('marca ambos checkboxes, depois desmarca o último [1]', () => {
+  it('marca ambos checkboxes, depois desmarca o último [1]', () => {
     cy.get('input[type="checkbox"]')
       .as('checkboxes')
       .each((preferencialContact) => {
@@ -255,10 +255,10 @@ describe('Central de Atendimento ao Cliente TAT', () => {
           .last()
           .uncheck()
           .should('not.be.checked')
-      })    
+      })
   });
 
-  it.only('marca ambos checkboxes, depois desmarca o último [2]', () => {
+  it('marca ambos checkboxes, depois desmarca o último [2]', () => {
     cy.get('input[type="checkbox"]')
       .check()
       .should('be.checked')
@@ -267,4 +267,30 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('not.be.checked')
   });
 
+  it('seleciona um arquivo da pasta fixtures', () => {
+    cy.get('input[type="file"]')
+      .selectFile('cypress/fixtures/example.json')
+      .should(input => {
+        console.log(input)
+        expect(input[0].files[0].name).to.equal('example.json')
+      })
+  });
+
+  it('seleciona um arquivo simulando um drag-and-drop', () => {
+    cy.get('#file-upload')
+      .selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+      .should(input => {
+        console.log(input)
+        expect(input[0].files[0].name).to.equal('example.json')
+      })
+  });
+
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+    cy.fixture('example.json', { enconding: null }).as('exampleFile') 
+    cy.get('input[type="file"]')
+      .selectFile('@exampleFile')
+      .should(input => {
+        expect(input[0].files[0].name).to.equal('example.json')
+      })
+  });
 })
