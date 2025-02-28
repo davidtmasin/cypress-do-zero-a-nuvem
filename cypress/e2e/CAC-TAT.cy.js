@@ -48,15 +48,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@campo_email').type(Cypress.env('email'), { log: false })
     cy.get('@campo_email').should('have.value', Cypress.env('email'))
 
-    // cy.get('#product').as('seleção_produtos')
-    // cy.get('@seleção_produtos').should('be.visible')
-    // cy.get('@seleção_produtos')
-    //   .select(products[3])
-
-    // cy.get("#email-checkbox")
-    //   .should('be.visible')
-    //   .click()
-
     cy.get('#open-text-area').as('como-podemos-te-ajudar')
     cy.get('@como-podemos-te-ajudar').should('be.visible')
     cy.get('@como-podemos-te-ajudar').type(longMessage, { delay: 0 })
@@ -130,7 +121,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get("#phone-checkbox").as('marcador-telefone')
     cy.get('@marcador-telefone').should('be.visible')
-    cy.get('@marcador-telefone').click()
+    // cy.get('@marcador-telefone').click()
+    cy.get('@marcador-telefone').check()
 
     cy.get('#open-text-area').as('como-podemos-te-ajudar')
     cy.get('@como-podemos-te-ajudar').should('be.visible')
@@ -218,14 +210,14 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', 'blog')
   });
 
-  it('marca o tipo de atendimento "Feedback', () => {
+  it.only('marca o tipo de atendimento "Feedback', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
       .should('be.checked')
       .should('have.value', 'feedback')
   });
 
-  it('marca cada tipo de atendimento [1]', () => {
+  it.only('marca cada tipo de atendimento [1]', () => {
     cy.get('input[type="radio"][value="feedback"]')
       .check()
       .should('be.checked')
@@ -242,14 +234,37 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', 'ajuda')
   });
 
-  it('marca cada tipo de atendimento [2]', () => {
+  it.only('marca cada tipo de atendimento [2]', () => {
     cy.get('input[type="radio"]')
       .each((typeOfService) => {
         cy.wrap(typeOfService)
           .check()
           .should('be.checked')
       })
+  });
 
+  it.only('marca ambos checkboxes, depois desmarca o último [1]', () => {
+    cy.get('input[type="checkbox"]')
+      .as('checkboxes')
+      .each((preferencialContact) => {
+        cy.wrap(preferencialContact)
+          .check()
+          .should('be.checked')
+
+        cy.get('@checkboxes')
+          .last()
+          .uncheck()
+          .should('not.be.checked')
+      })    
+  });
+
+  it.only('marca ambos checkboxes, depois desmarca o último [2]', () => {
+    cy.get('input[type="checkbox"]')
+      .check()
+      .should('be.checked')
+      .last()
+      .uncheck()
+      .should('not.be.checked')
   });
 
 })
