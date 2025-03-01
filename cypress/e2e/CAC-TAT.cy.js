@@ -60,13 +60,20 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
-    cy.contains('button', 'Enviar').as('enviar-form')
-    cy.get('@enviar-form').should('be.visible')
+    cy.contains('button', 'Enviar')
+      .as('enviar-form')
+      .should('be.visible')
+
+    cy.clock()
     cy.get('@enviar-form').click()
 
-    cy.get('.success > strong').as('msg-de-sucesso')
-    cy.get('@msg-de-sucesso').should('be.visible')
-    cy.get('@msg-de-sucesso').should('have.text', 'Mensagem enviada com sucesso.')
+    cy.get('.success > strong')
+      .as('msg-de-sucesso')
+      .should('be.visible')
+      .should('have.text', 'Mensagem enviada com sucesso.')
+
+    cy.tick(3000)
+    cy.get('@msg-de-sucesso').should('not.be.visible')
   });
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
@@ -92,13 +99,19 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').should('have.value', shortMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
-    cy.contains('button', 'Enviar').as('enviar-form')
-    cy.get('@enviar-form').should('be.visible')
+    cy.contains('button', 'Enviar')
+      .as('enviar-form')
+      .should('be.visible')
+
+    cy.clock()
     cy.get('@enviar-form').click()
 
-    cy.get('.error > strong').as('msg-de-erro')
-    cy.get('@msg-de-erro').should('be.visible')
-    cy.get('@msg-de-erro').should('have.text', 'Valide os campos obrigatórios!')
+    cy.get('.error > strong')
+      .as('msg-de-erro').should('be.visible')
+      .should('have.text', 'Valide os campos obrigatórios!')
+    
+    cy.tick(3000)
+    cy.get('@msg-de-erro').should('not.be.visible')
   });
 
   it('campo telefone continua vazio quando preenchido com um valor não-numérico', () => {
@@ -136,13 +149,20 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
-    cy.contains('button', 'Enviar').as('enviar-form')
-    cy.get('@enviar-form').should('be.visible')
+    cy.contains('button', 'Enviar')
+      .as('enviar-form')
+      .should('be.visible')
+    
+    cy.clock()
     cy.get('@enviar-form').click()
 
-    cy.get('.error > strong').as('msg-de-erro')
-    cy.get('@msg-de-erro').should('be.visible')
-    cy.get('@msg-de-erro').should('have.text', 'Valide os campos obrigatórios!')
+    cy.get('.error > strong')
+      .as('msg-de-erro')
+      .should('be.visible')
+      .should('have.text', 'Valide os campos obrigatórios!')
+    
+    cy.tick(3000)
+    cy.get('@msg-de-erro').should('not.be.visible')
   });
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -181,21 +201,30 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
     // cy.get('button[type="submit"]').as('enviar-form')
+    cy.clock()
     cy.contains('button', 'Enviar').as('enviar-form')
     cy.get('@enviar-form').click()
 
-    cy.get('.error > strong').as('msg-de-erro')
-    cy.get('@msg-de-erro').should('be.visible')
-    cy.get('@msg-de-erro').should('have.text', 'Valide os campos obrigatórios!')
+    cy.get('.error > strong')
+      .as('msg-de-erro')
+      .should('be.visible')
+      .should('have.text', 'Valide os campos obrigatórios!')
+
+    cy.tick(3000)
+    cy.get('@msg-de-erro').should('not.be.visible')
   });
 
   it('envia o formulário com sucesso usando um comando customizado', () => {
     // cy.fillMandatoryFieldsAndSubmit(data)
     cy.fillMandatoryFieldsAndSubmit()
 
-    cy.get('.success > strong').as('msg-de-sucesso')
-    cy.get('@msg-de-sucesso').should('be.visible')
-    cy.get('@msg-de-sucesso').should('have.text', 'Mensagem enviada com sucesso.')
+    cy.get('.success > strong')
+      .as('msg-de-sucesso')
+      .should('be.visible')
+      .should('have.text', 'Mensagem enviada com sucesso.')
+    
+      cy.tick(3000)
+    cy.get('@msg-de-sucesso').should('not.be.visible')
   });
 
   it('selecione um produto (YouTube) por seu texto', () => {

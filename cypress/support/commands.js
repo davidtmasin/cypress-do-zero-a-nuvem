@@ -50,7 +50,9 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (data = {
     cy.get('@como-podemos-te-ajudar').type(data.shortMessage, {delay: 0})
     cy.get('@como-podemos-te-ajudar').should('have.value', data.shortMessage)
 
-    cy.contains('button', 'Enviar').as('enviar-form')
-    cy.get('@enviar-form').should('be.visible')
+    cy.clock()
+    cy.contains('button', 'Enviar')
+      .as('enviar-form')
+      .should('be.visible')
     cy.get('@enviar-form').click()
 })
