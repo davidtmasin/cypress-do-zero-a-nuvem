@@ -30,27 +30,26 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', (data = {
     validEmail: 'xablaumaster@teste.com',
     shortMessage: 'Teste QA'
 }) => {
-    cy.get('#firstName').as('campo_nome')
-    cy.get('@campo_nome').should('be.visible')
-    cy.get('@campo_nome').type(data.firstName)
-    cy.get('@campo_nome').should('have.value', data.firstName)
+    cy.get('#firstName')
+      .should('be.visible')
+      .type(data.firstName)
+      .should('have.value', data.firstName)
 
-    cy.get('#lastName').as('campo_sobrenome')
-    cy.get('@campo_sobrenome').should('be.visible')
-    cy.get('@campo_sobrenome').type(data.lastName)
-    cy.get('@campo_sobrenome').should('have.value', data.lastName)
+    cy.get('#lastName')
+      .should('be.visible')
+      .type(data.lastName)
+      .should('have.value', data.lastName)
 
-    cy.get('#email').as('campo_email')
-    cy.get('@campo_email').should('be.visible')
-    cy.get('@campo_email').type(data.validEmail)
-    cy.get('@campo_email').should('have.value', data.validEmail)
+    cy.get('#email')
+      .should('be.visible')
+      .type(data.validEmail)
+      .should('have.value', data.validEmail)
 
-    cy.get('#open-text-area').as('como-podemos-te-ajudar')
-    cy.get('@como-podemos-te-ajudar').should('be.visible')
-    cy.get('@como-podemos-te-ajudar').type(data.shortMessage, {delay: 0})
-    cy.get('@como-podemos-te-ajudar').should('have.value', data.shortMessage)
+    cy.get('#open-text-area')
+      .should('be.visible')
+      .type(data.shortMessage, {delay: 0})
+      .should('have.value', data.shortMessage)
 
-    cy.clock()
     cy.contains('button', 'Enviar')
       .as('enviar-form')
       .should('be.visible')

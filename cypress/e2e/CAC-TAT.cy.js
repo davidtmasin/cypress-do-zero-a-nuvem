@@ -32,40 +32,35 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('be.equal', title)
   })
 
-  it('preenche os campos obrigatório e envia o formulário', () => {
-    cy.get('#firstName').as('campo_nome')
-    cy.get('@campo_nome').should('be.visible')
+  it.only('preenche os campos obrigatório e envia o formulário', () => {
+    cy.clock()
+    cy.get('#firstName')
+      .as('campo_nome')
+      .should('be.visible')
     // cy.get('@campo_nome').type(Cypress.env('firstName'))
-    cy.get('@campo_nome').type(firstName)
-    // cy.get('@campo_nome').should('have.value', Cypress.env('firstName'))
-    cy.get('@campo_nome').should('have.value', firstName)
+    cy.get('@campo_nome')
+      .type(firstName)
+      .should('have.value', firstName)
 
-    cy.get('#lastName').as('campo_sobrenome')
-    cy.get('@campo_sobrenome').should('be.visible')
-    // cy.get('@campo_sobrenome').type(Cypress.env('lastName'))
-    cy.get('@campo_sobrenome').type(lastName)
-    // cy.get('@campo_sobrenome').should('have.value', Cypress.env('lastName'))
-    cy.get('@campo_sobrenome').should('have.value', lastName)
+    cy.get('#lastName')
+      .should('be.visible')
+      .type(lastName)
+      .should('have.value', lastName)
 
-    cy.get('#email').as('campo_email')
-    cy.get('@campo_email').should('be.visible')
-    // cy.get('@campo_email').type(Cypress.env('email'), { log: false })
-    cy.get('@campo_email').type(validEmail, { log: false })
-    // cy.get('@campo_email').should('have.value', Cypress.env('email'))
-    cy.get('@campo_email').should('have.value', validEmail)
+    cy.get('#email')
+      .should('be.visible')
+      .type(validEmail, { log: false })
+      .should('have.value', validEmail)
 
-    cy.get('#open-text-area').as('como-podemos-te-ajudar')
-    cy.get('@como-podemos-te-ajudar').should('be.visible')
-    cy.get('@como-podemos-te-ajudar').type(longMessage, { delay: 0 })
-    cy.get('@como-podemos-te-ajudar').should('have.value', longMessage)
+    cy.get('#open-text-area')
+      .should('be.visible')
+      .type(longMessage, { delay: 0 })
+      .should('have.value', longMessage)
 
     // cy.get('button[type="submit"]').as('enviar-form')
     cy.contains('button', 'Enviar')
-      .as('enviar-form')
-      .should('be.visible')
-
-    cy.clock()
-    cy.get('@enviar-form').click()
+     .should('be.visible')
+     .click()
 
     cy.get('.success > strong')
       .as('msg-de-sucesso')
@@ -77,6 +72,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.clock()
     cy.get('#firstName').as('campo_nome')
     cy.get('@campo_nome').should('be.visible')
     cy.get('@campo_nome').type(firstName)
@@ -103,7 +99,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .as('enviar-form')
       .should('be.visible')
 
-    cy.clock()
     cy.get('@enviar-form').click()
 
     cy.get('.error > strong')
@@ -123,6 +118,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
     cy.get('#firstName').as('campo_nome')
     cy.get('@campo_nome').should('be.visible')
     cy.get('@campo_nome').type(firstName)
@@ -153,7 +149,6 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .as('enviar-form')
       .should('be.visible')
     
-    cy.clock()
     cy.get('@enviar-form').click()
 
     cy.get('.error > strong')
@@ -215,6 +210,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('envia o formulário com sucesso usando um comando customizado', () => {
+    cy.clock()
     // cy.fillMandatoryFieldsAndSubmit(data)
     cy.fillMandatoryFieldsAndSubmit()
 
