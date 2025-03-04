@@ -365,10 +365,23 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     })
   });
 
-  it.only('preenche o campo da área de texto usando o comando invoke', () => {
+  it('preenche o campo da área de texto usando o comando invoke', () => {
     cy.get('#open-text-area')
-    .invoke('val', 'teste de inserção de texto com o comando invoke()')
-    .should('have.value', 'teste de inserção de texto com o comando invoke()')
+    .invoke('val', 'Um texto qualquer')
+    .should('have.value', 'Um texto qualquer')
   });
 
+  it('encontrar o gatinho 🐈 escondido', () => {
+    cy.get('#cat')
+      .as('gatinho')
+
+    cy.get('@gatinho')
+      .invoke('show')
+    
+    cy.get('#title')
+      .invoke('text', 'CAT TAT')
+
+    cy.get('#subtitle')
+      .invoke('text', 'I ❤️ cats!')
+  });
 })
